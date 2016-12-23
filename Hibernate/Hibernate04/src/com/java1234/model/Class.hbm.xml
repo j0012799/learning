@@ -1,0 +1,17 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.java1234.model">
+	<!-- 映射持久化类 -->
+	<class name="Class" table="t_class">
+		<!-- 映射对象标识符 -->
+		<id name="id" column="classId">
+			<generator class="native"></generator>
+		</id>
+		<!-- 映射普通属性 -->
+		<property name="name" column="className"></property>
+	</class>
+
+</hibernate-mapping>

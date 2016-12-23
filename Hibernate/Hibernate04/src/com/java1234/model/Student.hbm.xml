@@ -1,0 +1,31 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.java1234.model">
+
+	<!-- 映射持久化类 --> 
+	<class name="Student" table="t_student">
+		<!-- 映射对象标识符 -->  
+		<id name="id" column="stuId">
+			<generator class="native"></generator>
+		</id>
+		<!-- 映射普通属性 -->
+		<property name="name" column="stuName"></property>
+		
+		<!-- 用many-to-one元素映射多对一关联  
+             name属性：指定关联的属性名  
+             column属性：指定此关联属性在数据库表中的外键字段名  
+        	  在<many-to-one>这端，cascade 默认是”none”，假如我们希望在持久化多的一端的时候，自动级
+			  联保存和更新一的一端，我们可以把 cascade 设置成”save-update”；
+			  		1、  none (默认值，表示所有操作都不级联)
+					2、  save-update  (添加与修改的时候，级联)
+					3、  delete (一起删除)
+					4、  all(增，删，改都一起完成)
+         --> 
+
+		<many-to-one name="c" column="classId" class="com.java1234.model.Class" cascade="save-update"></many-to-one>
+	</class>
+
+</hibernate-mapping>
