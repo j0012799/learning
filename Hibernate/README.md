@@ -15,34 +15,34 @@
 * 一对多双向关联映射:即在一的一端存在多的一端的一个`集合对象`，在多的一端存在一的一端的一个`对象`，这样就可以保证在加载一的一端或多的一端将被指向端的集合或对象加载上来，即保证双向关联
 
 * 1.cascade="all"且inverse="false"
-        // 执行对class的插入
-          Hibernate: insert into t_class (className) values (?)
-        // cascade = 'all'，所以进行级联操作
-          Hibernate: insert into t_student (stuName, classId) values (?, ?)
-          Hibernate: insert into t_student (stuName, classId) values (?, ?)
-        // inverse = 'false'，由class来维护关系（可以看到这些操作是多余的）
-          Hibernate: update t_student set classId=? where stuId=?
-          Hibernate: update t_student set classId=? where stuId=?
+ - // 执行对class的插入
+ - Hibernate: insert into t_class (className) values (?)
+ - // cascade = 'all'，所以进行级联操作
+ - Hibernate: insert into t_student (stuName, classId) values (?, ?)
+ - Hibernate: insert into t_student (stuName, classId) values (?, ?)
+ - // inverse = 'false'，由class来维护关系（可以看到这些操作是多余的）
+ - Hibernate: update t_student set classId=? where stuId=?
+ - Hibernate: update t_student set classId=? where stuId=?
 
 * 2.cascade = "none" 且 inverse = "false"
-        // 执行对class的插入
-          Hibernate: insert into t_class (className) values (?)
-        // inverse='false'，所以更新关系 
-          Hibernate: update t_student set classId=? where stuId=?
-        // 但由于cascade='none'，student并未插入数据库，导致如下exception
-          org.hibernate.TransientObjectException: object references an unsaved transient instance - save the transient instance before flushing: 
+ - // 执行对class的插入
+ - Hibernate: insert into t_class (className) values (?)
+ - // inverse='false'，所以更新关系 
+ - Hibernate: update t_student set classId=? where stuId=?
+ - // 但由于cascade='none'，student并未插入数据库，导致如下exception
+ - org.hibernate.TransientObjectException: object references an unsaved transient instance - save the transient instance before flushing: 
 
 * 3.cascade = "all" 且 inverse = "true"
-        //执行对class的插入 
-          Hibernate: insert into t_class (className) values (?)
-        //cascade='all'，执行对student的插入 
-          Hibernate: insert into t_student (stuName, classId) values (?, ?)
-          Hibernate: insert into t_student (stuName, classId) values (?, ?)
-        // 但由于inverse='true'，所以未有对关系的维护。但由于一对多的关系中，关系本身在“多”方的表中。所以，无需更新关系
+ - //执行对class的插入 
+ - Hibernate: insert into t_class (className) values (?)
+ - //cascade='all'，执行对student的插入 
+ - Hibernate: insert into t_student (stuName, classId) values (?, ?)
+ - Hibernate: insert into t_student (stuName, classId) values (?, ?)
+ - // 但由于inverse='true'，所以未有对关系的维护。但由于一对多的关系中，关系本身在“多”方的表中。所以，无需更新关系
 
 * 4.cascade = "none" 且 inverse = "true"
-        //只执行对class的插入
-          Hibernate: insert into t_class (className) values (?)
+ - //只执行对class的插入
+ - Hibernate: insert into t_class (className) values (?)
 
 * [cascade与inverse详细讲解1](http://blog.csdn.net/tlycherry/article/details/8976416)
 
