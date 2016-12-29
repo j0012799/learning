@@ -51,3 +51,13 @@
 *在代码中手动更改进行测试*
 
 **可以看到，对于一对多关系，关系应由“多”方来维护（指定“一”方的inverse为true），并且应在“一”方指定相应的级联操作。**
+
+## Hibernate05-----深入理解hibernate的三种状态
+* *具体结合代码分析*
+* [深入hibernate的三种状态](http://www.cnblogs.com/xiaoluo501395377/p/3380270.html)
+* 总结：
+ - ①.对于刚创建的一个对象，如果session中和数据库中都不存在该对象，那么该对象就是`瞬时对象(Transient)`
+ - ②.瞬时对象调用save方法，或者离线对象调用update方法可以使该对象变成`持久化对象(Persistent)`，如果对象是持久化对象时，那么对该对象的任何修改，都会在提交事务时才会与之进行比较，如果不同，则发送一条update语句，否则就不会发送语句
+ - ③.`离线对象(Detached)`就是，数据库存在该对象，但是该对象又没有被session所托管
+
+![状态分析](http://upload-images.jianshu.io/upload_images/2771329-3268b87f0a40e5b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
