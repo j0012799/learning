@@ -61,3 +61,51 @@
  - ③.`离线对象(Detached)`就是，数据库存在该对象，但是该对象又没有被session所托管
 
 ![状态分析](http://upload-images.jianshu.io/upload_images/2771329-3268b87f0a40e5b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+## Hibernate09-----hibernate检索策略
+**hibernate类级别检索策略**
+* 【testLazy1～testLazy４类级别的`立即检索`与`延迟检索`具体测试代码】
+```
+在class中配置lazy
+```
+
+**hibernate关联级别检索策略(基于一对多的双向关系)**
+== 1 由一的一方关联多的一方（此处是查询班级时，同时查询出学生）【test5~test10】
+
+```
+* <set>
+* fetch:控制sql语句的类型
+  > join		:发送迫切左外连接的SQL查询关联对象.fetch=”join”那么lazy被忽略了.
+  > select		:默认值,发送多条SQL查询关联对象.
+  > subselect	:发送子查询查询关联对象.(需要使用Query接口测试)
+
+* lazy:控制关联对象的检索是否采用延迟.
+  > true		:默认值, 查询关联对象的时候使用延迟检索
+  > false		:查询关联对象的时候不使用延迟检索.
+  > extra		:及其懒惰.
+***** 如果fetch是join的情况,lazy属性将会忽略.
+
+* bitch-size     :n+1问题【testBatch2、testBatch2】
+  > 一方查多方：在一方的set中就代表着多方的对象，将batch-size放在set中，就可以理解查多方的时候，就使用批量检索了。
+  >多方查一方：在一方的class中设置batch-size。可以理解，当多方查到一方时，在一方的映射文件中的class部分遇到了batch-size就知道查询一方时需要批量检索了
+```
+== 2 由多的一方关联一的一方（此处是查询学生时，同时查询出班级）【test11~test14】
+```
+
+* <many-to-one>
+* fetch:控制SQL语句发送格式
+  > join		:发送一个迫切左外连接查询关联对象.fetch=”join”,lay属性会被忽略.
+  > select		:发送多条SQL检索关联对象.
+* lazy:关联对象检索的时候,是否采用延迟
+  > false		:不延迟
+  > proxy		:使用代理.检索订单额时候,是否马上检索客户 由Class对象的映射文件中<class>上lazy属性来决定(一的一方上觉定).
+  > no-proxy	:不使用代理（此处没研究）
+```
+
+* [Hibernate：检索策略的学习1](http://tracylihui.github.io/2015/07/10/Hibernate%EF%BC%9A%E6%A3%80%E7%B4%A2%E7%AD%96%E7%95%A5%E7%9A%84%E5%AD%A6%E4%B9%A01/)
+
+* [get和load的区别](http://tracylihui.github.io/2015/07/20/Hibernate%EF%BC%9Aget%E5%92%8Cload/)
+
+* [Hibernate<六> Hibernate的检索策略](https://my.oschina.net/wangning0535/blog/513220)
+
+* http://www.cnblogs.com/whgk/p/6164862.html
