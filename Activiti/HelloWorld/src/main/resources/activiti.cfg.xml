@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+  <!-- 定义流程引擎配置对象 -->
+  <bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+ 
+    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/db_activiti" />
+    <property name="jdbcDriver" value="com.mysql.jdbc.Driver" />
+    <property name="jdbcUsername" value="root" />
+    <property name="jdbcPassword" value="root" />
+    
+ 	<!-- 配置数据库建表策略 -->
+ 		<!--
+		 	public static final String DB_SCHEMA_UPDATE_FALSE = "false";不能自动创建表，需要表存在
+  			public static final String DB_SCHEMA_UPDATE_CREATE_DROP = "create-drop";先删除表再创建表
+  			public static final String DB_SCHEMA_UPDATE_TRUE = "true";如果表不存在，自动创建表
+		 -->
+    <property name="databaseSchemaUpdate" value="true" />
+ 
+  </bean>
+ 
+</beans>
