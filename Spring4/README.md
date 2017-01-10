@@ -66,3 +66,10 @@
 本例以银行转账为例，故意将转入的方法写错（sql语句中），模拟实际中出现的问题，发现转出了，并没有转入，
 在数据库中发现数据并没有发生变化，说明数据出现了回滚
 ```
+## DeclarativeTransactionManagement------声明式事务管理
+**步骤：**
+* 1.jdbc事务管理器 
+* 2.配置事务通知
+* 3.配置事务切面：拦截哪些方法(切入点表达式)+应用上面的事务通知 
+* ![声明式事务配置.JPG](http://upload-images.jianshu.io/upload_images/2771329-ac74574b6c368bdf.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
