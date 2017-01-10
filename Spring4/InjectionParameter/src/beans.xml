@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 注入基本类型 -->
+	<bean id="people1" class="com.java1234.entity.People">
+		<property name="id" value="1"></property>
+		<property name="name" value="张三"></property>
+		<property name="age" value="11"></property>
+	</bean>
+	<!-- 注入bean -->
+	<bean id="dog1" class="com.java1234.entity.Dog">
+		<property name="name" value="Jack"></property>
+	</bean>
+	<bean id="people2" class="com.java1234.entity.People">
+		<property name="id" value="1"></property>
+		<property name="name" value="张三"></property>
+		<property name="age" value="11"></property>
+		<!-- 给people2注入了一个dog的属性 -->
+		<property name="dog" ref="dog1"></property>
+	</bean>
+	<!-- 注入内部bean -->
+	<bean id="people3" class="com.java1234.entity.People">
+		<property name="id" value="1"></property>
+		<property name="name" value="张三"></property>
+		<property name="age" value="11"></property>
+		<property name="dog">
+			<!-- 内部bean -->
+			<bean class="com.java1234.entity.Dog">
+				<property name="name" value="Tom"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 注入null -->
+	<bean id="people4" class="com.java1234.entity.People">
+		<property name="id" value="1"></property>
+		<property name="name" value="张三"></property>
+		<property name="age" value="11"></property>		
+		<property name="dog">
+			<!-- 狗的属性注入为null值 -->
+			<null></null>
+		</property>
+	</bean>
+	<!-- 注入级联属性 -->
+		<!--测试此处时要将People.java中 rivate Dog dog;替换为private Dog dog=new Dog(); 注意：属性需要先初始化后才能为级联属性赋值和structs2不同
+	<bean id="people5" class="com.java1234.entity.People">
+		<property name="id" value="1"></property>
+		<property name="name" value="张三"></property>
+		<property name="age" value="11"></property>
+		<property name="dog.name" value="Jack2"></property>
+	</bean>
+	-->
+	
+	<!-- 注入集合类型属性  包括4种类型-->
+	<bean id="people6" class="com.java1234.entity.People">
+		<property name="id" value="1"></property>
+		<property name="name" value="张三"></property>
+		<property name="age" value="11"></property>
+		<property name="dog" ref="dog1"></property>
+		<property name="hobbies">
+			<list>
+				<value>唱歌</value>
+				<value>跳舞</value>
+			</list>
+		</property>
+		<property name="loves">
+			<set>
+				<value>唱歌2</value>
+				<value>跳舞2</value>
+			</set>
+		</property>
+		<property name="works">
+			<map>
+				<entry>
+					<key><value>上午</value></key>
+					<value>写代码</value>
+				</entry>
+				<entry>
+					<key><value>下午</value></key>
+					<value>测试代码</value>
+				</entry>
+			</map>
+		</property>
+		<property name="addresses">
+			<props>
+				<prop key="address1">aaaaa</prop>
+				<prop key="address2">bbbbb</prop>
+			</props>
+		</property>
+	</bean>
+	
+</beans>
