@@ -30,3 +30,39 @@
  - Set类型
  - Map类型
  - Properties类型
+
+## AutoWire------自动装配详解
+```
+注意：在配置bean时，<bean>标签中Autowire属性的优先级比其上级标
+签高，即是说，如果在上级标签中定义default-autowire属性为byName，
+而在<bean>中定义为byType时，Spring IoC容器会优先使用<bean>标签
+的配置。
+```
+* 1.byName
+ - 通过名称进行自动匹配: 配置文件中 有dog、 dog1、 people 三个对象，通过名称将dog注入到people中去(注入的名字和类中属性名一致)
+ - 在autoWireByName.xml中设置了autowire="byName",这样配置文件会自动根据 `People.java 中的getDog找bean id="dog"的bean`，然后自动配上去，如果没找到就不装配。`注意：byName的name是java中setXxxx 的Xxxx, 和的private Dog dog中dog拼写毫无关系`
+
+* 2.byType
+ - id="people1"的bean在按照byType进行装配时，可以适配的名字为dog2、cat的bean的类型，所以dog2、cat会被注入到people1的dog2、cat属性中，在按照类型进行装配的时候，如过有两个bean的类型符合的话Spring就不知道最终该使用哪个，但是当存在多个类型符合的bean时，会报错。
+
+* 3.constructor：和 byType 类似，只不过它是根据构造方法注入而言的，根据类型，自动注入；
+
+*建议：自动装配机制慎用，它屏蔽了装配细节，容易产生潜在的错误*
+
+## ProgrammaticTransactionManagement------编程式事务管理
+[详细分析1](http://www.cnblogs.com/kabi/p/5182064.html) 
+[详细分析2](http://sishuok.com/forum/blogPost/list/2506.html)
+
+**步骤：**
+* 编写spring配置文件
+ - jdbc事务管理器:使用DataSourceTransactionManager来管理JDBC事务,事务管理器传的参数是数据源
+ - 声明事务模板
+
+* 调用模板类的方法启用编程式事务管理
+ - 通过调用模板类的参数类型为TransactionCallback或TransactionCallbackWithoutResult的execute方法来自动享受事务管理 
+
+**说明：**
+```
+本例以银行转账为例，故意将转入的方法写错（sql语句中），模拟实际中出现的问题，发现转出了，并没有转入，
+在数据库中发现数据并没有发生变化，说明数据出现了回滚
+```

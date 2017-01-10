@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd"
+    
+    	default-autowire="byType">
+
+	<!-- id="people1"的bean在按照byType进行装配时，可以适配的名字为dog2、cat的bean的类型，所以dog2、cat会被注入到people1的dog2、cat属性
+			在按照类型进行装配的时候，如过有两个bean的类型符合的话,spring就不知道最终该使用哪个
+	 -->	
+	<bean id="dog2" class="com.java1234.entity.Dog">
+		<property name="name" value="Tom"></property>
+	</bean>
+
+	<bean id="cat" class="com.java1234.entity.Cat">
+		<property name="name" value="小黑"></property>
+	</bean>
+
+	<bean id="people1" class="com.java1234.entity.People">
+		<property name="id" value="1"></property>
+		<property name="name" value="李四"></property>
+		<property name="age" value="23"></property>
+		<!-- 自动装配仅适用于引用类型,普通类型还需要手动进行注入 -->
+	</bean>
+	
+</beans>
